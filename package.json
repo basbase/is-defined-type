@@ -29,5 +29,9 @@
   "unpkg": "dist/is-defined-type.min.js",
   "devDependencies": {
     "tape": "^4.8.0"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {}
 }
