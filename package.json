@@ -1,0 +1,33 @@
+{
+  "name": "is-defined-type",
+  "version": "1.0.0",
+  "description": "Check if a variable in a nested object is defined and optionally also check its type. Useful for verifying API responses.",
+  "main": "is-defined-type.js",
+  "scripts": {
+    "test": "node test/run-tests.js",
+    "prepublishOnly": "uglifyjs is-defined-type.js -m -c -o dist/is-defined-type.min.js --source-map"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/basbase/is-defined-type.git"
+  },
+  "keywords": [
+    "check",
+    "undefined",
+    "defined",
+    "deeply",
+    "nested",
+    "object",
+    "type"
+  ],
+  "author": "basbase",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/basbase/is-defined-type/issues"
+  },
+  "homepage": "https://github.com/basbase/is-defined-type#readme",
+  "unpkg": "dist/is-defined-type.min.js",
+  "devDependencies": {
+    "tape": "^4.8.0"
+  }
+}
