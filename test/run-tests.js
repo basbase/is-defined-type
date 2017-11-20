@@ -130,6 +130,13 @@ test(function (t) {
     t.notOk(isDefinedType(data, 'user.email', 'object'));
     t.notOk(isDefinedType(data, 'unknown.email', 'null'));
 
+    // Return value of checked variable
+    t.equal(isDefinedType(data, 'user.name','value'), 'Alice');
+    t.equal(isDefinedType(data, 'user.name',['string','value']), 'Alice');
+    t.equal(isDefinedType(1, null, ['value']), 1);
+    t.equal(isDefinedType(1, null, ['number','value']), 1);
+    t.equal(isDefinedType(null, null, ['null','value']), null);
+
     t.end();
 
 });

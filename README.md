@@ -6,22 +6,18 @@ This is especially useful for validating API responses which contain many nested
 var res = {
     first: {
         second: {
-            third: "value"
+            third: "target"
         } 
     }
 }
 ```
-You could get "value" by using: 
+You could get "target" by using: 
 ```js
 var val = res.first.second.third;
 ```
 But if first, second or third is undefined or not an object you get an exception. So you can do some verbose checks:
 ```js
-var val = res.first 
-  && typeof res.first === 'object' 
-  && res.first.second 
-  && typeof res.first.second === 'object' 
-  && typeof res.first.second.third === 'undefined' 
+var val = res && res.first && res.first.second && typeof res.first.second.third !== 'undefined' 
     ? res.first.second.third
     : null;
 ```
@@ -37,13 +33,18 @@ var val = isDefinedType(res,'first.second.third', 'string')
   ? res.first.second.third
   : null;
 ```
+Pass along 'value' with the types to check and the value of the checked variable will be returned if it is defined and matches a given type
+```js
+var val = isDefinedType(res,'first.second.third', ['string', 'value']) || null; 
+// val === 'target'
+```
 ## Usage
 ```js
 isDefinedType(input, path, type);
 ```
 * input: Object to check
 * path: Optional path to key in input to check. Can be a string of keys with a dot between each level inside the object 'res.user.name' or an array of strings: ['res','user','name']. If any of the keys before the last one does not point to an object the function will return false.
-* type: Optional type which the last key in the path must match if it is not undefined. This must provided as single lowercase string or an array of lowercase strings if multiple types are valid. Possible values are: string | object | array | number | null. Null and array are treated as a special cases and will not match object.
+* type: Optional type which the last key in the path must match if it is not undefined. This must provided as single lowercase string or an array of lowercase strings if multiple types are valid. Possible values are: string | object | array | number | null. Null and array are treated as a special cases and will not match object. If 'value' is in type the function result will contain the checked variable if it is defined and matches a given type.
 
 ## Installation
 ### Browser

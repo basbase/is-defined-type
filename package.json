@@ -1,6 +1,6 @@
 {
   "name": "is-defined-type",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Check if a variable in a nested object is defined and optionally also check its type. Useful for verifying API responses.",
   "main": "is-defined-type.js",
   "scripts": {
