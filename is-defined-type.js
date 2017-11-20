@@ -18,6 +18,7 @@
      * @returns {boolean}
      */
     var isDefinedType = function (input, path, type) {
+        var returnValue = false
 
         var nodes = [];
 
@@ -79,6 +80,11 @@
 
         }
 
+        if (types.indexOf('value') !== -1) {
+            types.splice(types.indexOf('value'), 1)
+            returnValue = true
+        }
+
         if (types.length) {
 
             var typeResult = false;
@@ -110,11 +116,11 @@
 
             }
 
-            return typeResult;
+            return typeResult ? returnValue ? current : true : false;
 
         } else {
 
-            return true;
+            return returnValue ? current : true;
 
         }
 
