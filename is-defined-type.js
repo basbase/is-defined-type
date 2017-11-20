@@ -14,13 +14,17 @@
      *
      * @param {Object} input - Object to look in
      * @param {(string|string[])} [path] - Path to key in input to check: 'res.user.name' or: ['res','user','name']
-     * @param {string|string[]} [type] - If path is defined also match this/these type(s)
+     * @param {string|string[]} [type] - If path is defined also match this/these type(s), when 'value' is in type return the value of the last checked node when it would otherwise return true
      * @returns {boolean}
      */
     var isDefinedType = function (input, path, type) {
-        var returnValue = false
 
-        var nodes = [];
+        var current     = input;
+        var nodes       = [];
+        var types       = [];
+        var returnValue = false;
+        var typeResult  = false;
+        var node, lowerCaseType, i, j;
 
         if (path) {
 
@@ -36,8 +40,6 @@
 
         }
 
-        var current = input;
-
         if (typeof current === 'undefined') {
 
             return false;
@@ -47,16 +49,14 @@
         /**
          * Check each node in the provided path for undefined
          */
-        for (var i = 0; i < nodes.length; i++) {
+        for (i = 0; i < nodes.length; i++) {
 
-            var node = nodes[i];
+            node = nodes[i];
 
-            if (typeof current[node] === 'undefined') {
-
-                return false;
-
-            } else if (i < nodes.length - 1 && (current[node] === null)) {
-            // } else if (i < nodes.length - 1 && (typeof current[node] !== 'object' || current[node] === null)) {
+            if (
+                typeof current[node] === 'undefined'
+                || (i < nodes.length - 1 && current[node] === null)
+            ) {
 
                 return false;
 
@@ -67,8 +67,6 @@
             }
 
         }
-
-        var types = [];
 
         if (isArray(type)) {
 
@@ -81,17 +79,17 @@
         }
 
         if (types.indexOf('value') !== -1) {
-            types.splice(types.indexOf('value'), 1)
+
+            types.splice(types.indexOf('value'), 1);
             returnValue = true
+
         }
 
         if (types.length) {
 
-            var typeResult = false;
+            for (j = 0; j < types.length && !typeResult; j++) {
 
-            for (var j = 0; j < types.length && !typeResult; j++) {
-
-                var lowerCaseType = types[j].toLowerCase();
+                lowerCaseType = types[j].toLowerCase();
 
                 switch (lowerCaseType) {
                     case 'array':
