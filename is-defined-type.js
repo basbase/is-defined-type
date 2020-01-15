@@ -15,15 +15,16 @@
      * @param {Object} input - Object to look in
      * @param {(string|string[])} [path] - Path to key in input to check: 'res.user.name' or: ['res','user','name']
      * @param {string|string[]} [type] - If path is defined also match this/these type(s), when 'value' is in type return the value of the last checked node when it would otherwise return true
-     * @returns {boolean}
+     * @param [defaultValue] - If path is not defined or does not match type, return defaultValue. When defaultValue is not undefined will return value when path is defined and matches type
      */
-    var isDefinedType = function (input, path, type) {
+    var isDefinedType = function (input, path, type, defaultValue) {
 
-        var current     = input;
-        var nodes       = [];
-        var types       = [];
-        var returnValue = false;
-        var typeResult  = false;
+        var current       = input;
+        var nodes         = [];
+        var types         = [];
+        var returnValue   = false;
+        var returnDefault = false;
+        var typeResult    = false;
         var node, lowerCaseType, i, j;
 
         if (path) {
@@ -40,9 +41,16 @@
 
         }
 
+        if (typeof defaultValue !== 'undefined') {
+
+            returnValue   = true;
+            returnDefault = true;
+
+        }
+
         if (typeof current === 'undefined') {
 
-            return false;
+            return returnDefault ? defaultValue : false;
 
         }
 
@@ -81,7 +89,7 @@
         if (types.indexOf('value') !== -1) {
 
             types.splice(types.indexOf('value'), 1);
-            returnValue = true
+            returnValue = true;
 
         }
 
@@ -114,7 +122,7 @@
 
             }
 
-            return typeResult ? returnValue ? current : true : false;
+            return typeResult ? (returnValue ? current : true) : (returnDefault ? defaultValue : false);
 
         } else {
 

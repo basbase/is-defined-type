@@ -137,6 +137,14 @@ test(function (t) {
     t.equal(isDefinedType(1, null, ['number','value']), 1);
     t.equal(isDefinedType(null, null, ['null','value']), null);
 
+    // Return defaultValue
+    t.equal(isDefinedType(data, 'user.name','value',undefined), 'Alice');
+    t.equal(isDefinedType(data, 'user.name',false,undefined), true);
+    t.equal(isDefinedType(data, 'user.name',false,'Bob'), 'Alice');
+    t.equal(isDefinedType(data, 'user.name','string','Bob'), 'Alice');
+    t.equal(isDefinedType(data, 'user.name','number','Bob'), 'Bob');
+    t.equal(isDefinedType(data, 'user.name','number','Bob'), 'Bob');
+
     t.end();
 
 });

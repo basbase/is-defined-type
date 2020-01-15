@@ -38,13 +38,21 @@ Pass along 'value' with the types to check and the value of the checked variable
 var val = isDefinedType(res,'first.second.third', ['string', 'value']) || null; 
 // val === 'target'
 ```
+Or specify a default value to be returned if the value is not defined
+```js
+var val = isDefinedType(res,'first.second.third', 'string', 'Default'); 
+// val === 'target'
+var val2 = isDefinedType(res,'first.second.third.undefined', 'string', 'Default'); 
+// val2 === 'Default'
+```
 ## Usage
 ```js
-isDefinedType(input, path, type);
+isDefinedType(input, path, type, defaultValue);
 ```
 * input: Object to check
 * path: Optional path to key in input to check. Can be a string of keys with a dot between each level inside the object 'res.user.name' or an array of strings: ['res','user','name']. If any of the keys before the last one does not point to an object the function will return false.
 * type: Optional type which the last key in the path must match if it is not undefined. This must provided as single lowercase string or an array of lowercase strings if multiple types are valid. Possible values are: string | object | array | number | null. Null and array are treated as a special cases and will not match object. If 'value' is in type the function result will contain the checked variable if it is defined and matches a given type.
+* defaultValue: Optional default value which will be returned if path is not defined or does not match type. When defaultValue is not undefined will return value when path is defined and matches type
 
 ## Installation
 ### Browser
@@ -103,4 +111,7 @@ isDefinedType(data, 'user.email','null'); // true
 isDefinedType(data, 'user.email','object'); // false
 isDefinedType(data, 'unknown.email','null'); // false
 
+// Return default value
+isDefinedType(data, 'user.name', 'string', 'Bob'); // Alice
+isDefinedType(data, 'user.name', 'number', 'Bob'); // Bob
 ```
