@@ -145,6 +145,9 @@ test(function (t) {
     t.equal(isDefinedType(data, 'user.name','number','Bob'), 'Bob');
     t.equal(isDefinedType(data, 'user.name','number','Bob'), 'Bob');
 
+    t.equal(typeof isDefinedType('string input', 'user.aliases', 'array', []).map, 'function');
+    t.equal(typeof isDefinedType(data, 'user.aliases', 'string', []).map, 'function');
+
     t.end();
 
 });

@@ -66,7 +66,7 @@
                 || (i < nodes.length - 1 && current[node] === null)
             ) {
 
-                return false;
+                return returnDefault ? defaultValue : false;
 
             } else {
 
